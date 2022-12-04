@@ -5,23 +5,13 @@ import { AppService } from './app.service';
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-
    players = []
-
    playersState = []
-
    isDuplicate = []
 
   @Post('/login')
   login(@Body() request) {
     this.players.push(request)
-    console.log(this.players)
   }
 
   @Get('/users')
@@ -32,8 +22,8 @@ export class AppController {
   @Post('/state')
   postState(@Body() request) {
     this.playersState.push(request)
-    const uuid = this.playersState.map(element => element.uuid)
-    const index = this.playersState.map(element => element.uuid).indexOf(request.uuid)
+    const uuid = this.playersState.map(element => element.id)
+    const index = this.playersState.map(element => element.id).indexOf(request.id)
     for(let i = 0; i < uuid.length; i++) {
       for(let j = i; j < uuid.length; j++) {
         if(uuid[i] === uuid[j + 1]) {
