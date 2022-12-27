@@ -12,13 +12,14 @@ export class UsersController {
   playersState = [];
   isDuplicate = [];
 
-  @Post('/login')
+  @Post()
   login(@Body() request) {
     this.loginService.login(request);
   }
 
   @Get()
   getUsers() {
+    console.log('-------------getting users---------------');
     return this.loginService.getUsers();
   }
 

@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
+import { LoginService } from './login.service';
 
 @Injectable()
 export class PlayerScoreService {
-  constructor() {}
+  constructor(public loginService: LoginService) {}
 
   playersScore = [];
 
   public updatePlayerScore(request) {
+    console.log('-------------updating player score---------------');
     this.playersScore.push(request);
     const uuid = this.playersScore.map((element) => element.id);
     const index = this.playersScore
@@ -19,6 +21,7 @@ export class PlayerScoreService {
         }
       }
     }
+    console.log(this.playersScore);
   }
 
   public getPlayerScore() {
