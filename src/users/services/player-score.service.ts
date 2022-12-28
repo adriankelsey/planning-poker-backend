@@ -5,6 +5,7 @@ import { LoginService } from './login.service';
 export class PlayerScoreService {
   constructor(public loginService: LoginService) {}
 
+  restPlayerScore = [];
   playersScore = [];
 
   public updatePlayerScore(request) {

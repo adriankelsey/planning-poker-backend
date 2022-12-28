@@ -19,7 +19,6 @@ export class UsersController {
 
   @Get()
   getUsers() {
-    console.log('-------------getting users---------------');
     return this.loginService.getUsers();
   }
 
