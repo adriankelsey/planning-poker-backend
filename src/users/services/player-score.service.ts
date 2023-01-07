@@ -1,11 +1,12 @@
 import { Injectable } from '@nestjs/common';
+import { BehaviorSubject } from 'rxjs';
 import { LoginService } from './login.service';
 
 @Injectable()
 export class PlayerScoreService {
   constructor(public loginService: LoginService) {}
 
-  previousPlayerScores = [];
+  previousPlayerScores: BehaviorSubject<any> = new BehaviorSubject([]);
   updatedPlayerScores = [];
 
   public updatePlayerScore(request) {
@@ -28,14 +29,10 @@ export class PlayerScoreService {
   }
 
   public postPreviousPlayerScores(request) {
-    for (let i = 0; i < this.previousPlayerScores.length; i++) {
-      if (this.previousPlayerScores[i].id !== request.id) {
-        this.previousPlayerScores.push(request);
-      }
-    }
+    this.previousPlayerScores.next(request);
   }
 
   public getPreviousPlayersScores() {
-    return this.previousPlayerScores;
+    return this.previousPlayerScores.getValue();
   }
 }
