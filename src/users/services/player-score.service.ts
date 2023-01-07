@@ -5,27 +5,37 @@ import { LoginService } from './login.service';
 export class PlayerScoreService {
   constructor(public loginService: LoginService) {}
 
-  restPlayerScore = [];
-  playersScore = [];
+  previousPlayerScores = [];
+  updatedPlayerScores = [];
 
   public updatePlayerScore(request) {
-    console.log('-------------updating player score---------------');
-    this.playersScore.push(request);
-    const uuid = this.playersScore.map((element) => element.id);
-    const index = this.playersScore
+    this.updatedPlayerScores.push(request);
+    const uuid = this.updatedPlayerScores.map((element) => element.id);
+    const index = this.updatedPlayerScores
       .map((element) => element.id)
       .indexOf(request.id);
     for (let i = 0; i < uuid.length; i++) {
       for (let j = i; j < uuid.length; j++) {
         if (uuid[i] === uuid[j + 1]) {
-          this.playersScore.splice(i, 1);
+          this.updatedPlayerScores.splice(i, 1);
         }
       }
     }
-    console.log(this.playersScore);
   }
 
-  public getPlayerScore() {
-    return this.playersScore;
+  public getUpdatedPlayerScores() {
+    return this.updatedPlayerScores;
+  }
+
+  public postPreviousPlayerScores(request) {
+    for (let i = 0; i < this.previousPlayerScores.length; i++) {
+      if (this.previousPlayerScores[i].id !== request.id) {
+        this.previousPlayerScores.push(request);
+      }
+    }
+  }
+
+  public getPreviousPlayersScores() {
+    return this.previousPlayerScores;
   }
 }

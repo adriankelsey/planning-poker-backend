@@ -28,7 +28,7 @@ export class PlanningPokerGateway implements OnModuleInit {
   @SubscribeMessage('playerScore')
   onPlayerScore(@MessageBody() body: any) {
     this.playerScoreService.updatePlayerScore(body);
-    const playerScores = this.playerScoreService.getPlayerScore();
+    const playerScores = this.playerScoreService.getUpdatedPlayerScores();
     this.server.emit('onPlayerScore', playerScores);
   }
 
@@ -39,9 +39,13 @@ export class PlanningPokerGateway implements OnModuleInit {
 
   @SubscribeMessage('newUser')
   onNewUser(@MessageBody() body: any) {
-    console.log('-------------creating new user---------------');
+    console.log('creating new user');
+    console.log(body);
     const users = this.loginService.login(body);
     this.playerScoreService.updatePlayerScore(users);
-    this.server.emit('onNewUser', users);
+    const playerScores = this.playerScoreService.getUpdatedPlayerScores();
+    console.log('getting player scores');
+    console.log(playerScores);
+    this.server.emit('onNewUser', { users: users, scores: playerScores });
   }
 }

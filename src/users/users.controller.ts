@@ -22,13 +22,15 @@ export class UsersController {
     return this.loginService.getUsers();
   }
 
-  @Post('/playerScore')
+  @Post('/playerScores')
   postState(@Body() request) {
-    this.playerScoreService.updatePlayerScore(request);
+    console.log('posting player scores');
+    this.playerScoreService.postPreviousPlayerScores(request);
+    console.log(this.playerScoreService.getPreviousPlayersScores());
   }
 
-  @Get('/playerScore')
+  @Get('/playerScores')
   getState() {
-    return this.playerScoreService.getPlayerScore();
+    return this.playerScoreService.getPreviousPlayersScores();
   }
 }
